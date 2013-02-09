@@ -1,7 +1,17 @@
 #Define character by stats
+import pygame
 
-class Character ( ):
-    def __init__ ( self ):
+class Character (pygame.sprite.Sprite):
+    def __init__ ( self, color = [255,0,0], initial_position = [0,0], size = [60, 120]):
+        #Sprite
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = pygame.Surface(size)
+        self.image.fill(color)
+
+        self.rect = self.image.get_rect()
+        self.rect.midbottom = initial_position
+        
         #Symptom intensities
         self.nose       = 0
         self.headache   = 0
@@ -22,7 +32,7 @@ class Character ( ):
         self.nauseaTresh= 1
     
 
-    def snease(self):
+    def sneeze(self):
         print("Achoo!")#Game relivant code here
 
 
@@ -41,7 +51,7 @@ class Character ( ):
 
         #These check the different symptom thresholds
         if(self.nose >= self.noseThresh):
-            self.snease()
+            self.sneeze()
 
         if(self.headache >= self.headThresh):
             self.pound()
