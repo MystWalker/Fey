@@ -1,6 +1,5 @@
 #Define character by stats
 import pygame
-from pygame.locals import *
 
 class Character (pygame.sprite.Sprite):
     def __init__ ( self, color = [255,0,0], initial_position = [0,0], size = [60, 120]):
@@ -12,9 +11,6 @@ class Character (pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.rect.midbottom = initial_position
-        
-        #Movement fields
-        self.speed = (0,0)
         
         #Symptom intensities
         self.nose       = 0
@@ -46,30 +42,9 @@ class Character (pygame.sprite.Sprite):
 
     def vomit(self):
         print("Hurgle!")#Game relivant code here
-        
-    def move(self, event):
-        if event.type == pygame.KEYDOWN and event.key == K_LEFT:
-            print("Moving Left")
-            self.speed = (-10,0)
-        elif event.type == pygame.KEYUP and event.key == K_LEFT:
-            print("Stopping Right")
-            self.speed = (0,0)
-        elif event.type == pygame.KEYDOWN and event.key == K_RIGHT:
-            print("Moving Right")
-            self.speed = (10,0)
-        elif event.type == pygame.KEYUP and event.key == K_RIGHT:
-            print("Stopping Right")
-            self.speed = (0,0)
+
 
     def update(self):
-        #Movement
-        x, y = self.rect.midbottom
-        
-        self.rect.move_ip(self.speed) 
-        
-        
-        
-        #Illness
         self.nose = self.nose + self.noseSlope
         self.headache = self.headache + self.noseSlope
         self.nausea = self.nausea + self.nauseaSlope

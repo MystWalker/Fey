@@ -9,9 +9,8 @@ import pygame
 import pygame.sprite
 
 class Room ( ):
-    def __init__ ( self, background, avatar):
+    def __init__ ( self, background):
         self.background = background #Must be a sprite
-        self.avatar = avatar
         self.objects = pygame.sprite.Group()
         pass
 

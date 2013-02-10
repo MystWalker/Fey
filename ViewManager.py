@@ -27,15 +27,14 @@ class ViewManager (pygame.sprite.Sprite):
         else: self.player = player
 
         #Draw starting objects
-        #self.setup()
+        self.setup()
 
         #Sprite Groups
         self.activeObjects = Group()
         self.activeBackground = Group()
-        self.activeAvatar = Group()
 
     def setup(self):
-        #self.image.blit(self.player.image, self.player.rect) #Draw player onto self
+        self.image.blit(self.player.image, self.player.rect) #Draw player onto self
         pass
 
     def update(self):
@@ -44,21 +43,14 @@ class ViewManager (pygame.sprite.Sprite):
     def setCurrentView ( self , view ):
         self.activeBackground.empty() #Get rid of old background
         self.activeObjects.empty() #Get rid of old objects
-        self.activeAvatar.empty() #Get rid of old Avatar
 
-        #Adds new background, objects, and avatar
+        #Adds new background and objects
         self.activeBackground.add(view.background)
-        self.activeObjects.add(view.objects)
-        self.activeAvatar.add(view.avatar)
+        self.activeObjects.add(view.objects) 
         pass
 
     def drawView ( self ):
-        #Draws sprites in the proper order for depth
-        #1. Background
-        #2. Objects
-        #3. Player avatar
         self.activeBackground.draw(self.image)
         self.activeObjects.draw(self.image)
-        self.activeAvatar.draw(self.image)
         pass
 
