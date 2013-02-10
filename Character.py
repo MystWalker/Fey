@@ -4,6 +4,8 @@ from pygame.locals import *
 
 class Character (pygame.sprite.Sprite):
     def __init__ ( self, color = [255,0,0], initial_position = [0,0], size = [60, 120]):
+        """Returns a Character. Based on python.sprite.Sprite
+        """
         #Sprite
         pygame.sprite.Sprite.__init__(self)
 

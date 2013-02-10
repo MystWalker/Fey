@@ -19,12 +19,20 @@ DEBUG = False
 
 class Fey ( ):
     def __init__ ( self ):
+        """Sets game instance fields and sets RUNNING to True. No return."""
+        
         if(DEBUG):print("Initializing");
         self.RUNNING = True
         self.DISPLAY_SURF = None
         self.SIZE = self.WIDTH, self.HEIGHT = 800, 640
         
     def start ( self ):
+        """Creates all game object instances. No return.
+        
+        This is where specific Rooms, Items, Cotrollers, and pygame essentials are
+        created.
+        
+        """
         if(DEBUG):print("Starting");
         pygame.init()
         #Create display
@@ -76,6 +84,13 @@ class Fey ( ):
 
 
     def handleEvent(self, event):
+        """Pipes given event to relivant reciver. No return.
+        
+        This method handles event calls and sorts them either to the main game instance,
+        to the game's ControlManager, or the game's VeiwManager. It may be better to put
+        this functionality into a standalone class.
+        
+        """
         if(DEBUG):print("Event check");
         if event.type == pygame.QUIT:
             self.RUNNING = False
@@ -94,11 +109,23 @@ class Fey ( ):
             self.conMan.handle(event)
 
     def update(self):
+        """Main update function. Should be called every cicle. No return.
+        
+        This function calls the update functions of all active game objects.
+        
+        """
         if(DEBUG):print("Updating");
         #Objects will update themselves (movement, calculation, etc)
         self.veiwMan.update()
 
     def render(self):
+        """Draws the final frame onto the display. No return.
+        
+        This function calls the ViewManager to blit (draw) all active objects 
+        to itself, then blits itself onto the main display, and then calls the
+        display to flip the changes to the screen.
+        
+        """
         if(DEBUG):print("Rendering");
         #ViewManager draws apropriate surfaces to itself
         self.veiwMan.drawView()
