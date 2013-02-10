@@ -6,6 +6,8 @@
 import pygame
 from pygame.locals import *
 
+DEBUG = False
+
 class ControlManager():
     def __init__(self):
         self.currentAvatar = pygame.sprite.GroupSingle()
@@ -16,7 +18,7 @@ class ControlManager():
         self.currentAvatar.add(newAvatar)
 
     def handle(self, event):
-        print("Handling: " + str(event.type))
+        if(DEBUG):print("Handling: " + str(event.type));
         self.currentAvatar.sprite.move(event)
         pass
 

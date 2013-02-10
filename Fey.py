@@ -12,6 +12,7 @@ from ViewManager import ViewManager
 from ControlManager import ControlManager
 from Character import Character
 from Room import Room
+from Item import Item
 
 #Set to True for debug print statements
 DEBUG = False
@@ -38,12 +39,37 @@ class Fey ( ):
         #Control Manager
         self.conMan = ControlManager()
         self.conMan.setAvatar(self.player)
-        #Creating Room
+        #Creating Rooms
         greenRoom = pygame.sprite.Sprite()
         greenRoom.image = pygame.Surface([1000, 640])
         greenRoom.rect = greenRoom.image.get_rect()
         greenRoom.image.fill([0,255,0])
         self.room1 = Room(greenRoom, self.player) #Sets background to greenRoom and avatar to self.player
+        
+        grayRoom = pygame.sprite.Sprite()
+        grayRoom.image = pygame.Surface([1000, 640])
+        grayRoom.rect = grayRoom.image.get_rect()
+        grayRoom.image.fill([100,100,100])
+        self.room2 = Room(grayRoom, self.player)
+        
+        #Creating items
+        self.box = Item([400, 600])
+        self.box.setTouchEvent(pygame.event.Event(25, {"room":self.room2}))
+        self.box2 = Item([200, 600])
+        self.box2.setTouchEvent(pygame.event.Event(25, {"room":self.room1}))
+        self.room1.addObject(self.box)
+        self.room2.addObject(self.box2)
+        self.itemGroup = pygame.sprite.RenderPlain(self.box,self.box2)
+        
+        #Making Text
+        #This is not critical code
+        if(pygame.font.get_init):
+            hello = pygame.font.Font(None,64)
+            hello = hello.render("Press Space", False, [0,0,0])
+            x,y = self.veiwMan.rect.center
+            x = x - (hello.get_width()/2)
+            y = y - (hello.get_height()/2)
+            self.veiwMan.image.blit(hello, [x,y])
         
         pygame.display.flip()
         self.RUNNING = True
@@ -57,15 +83,20 @@ class Fey ( ):
         if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
             self.RUNNING = False
         elif event.type == pygame.KEYDOWN and event.key == K_SPACE:
-            self.veiwMan.setCurrentView(self.room1)
+            callChange = pygame.event.Event(25, {"room":self.room1})
+            pygame.event.post(callChange)
+        elif event.type == pygame.KEYDOWN and event.key == K_DOWN:
+            callChange = pygame.event.Event(25, {"room":self.room2})
+            pygame.event.post(callChange)
+        elif(event.type == 25): #Event #25 is a changeRoom call
+            self.veiwMan.setCurrentView(event.room)
         else:
             self.conMan.handle(event)
 
     def update(self):
         if(DEBUG):print("Updating");
         #Objects will update themselves (movement, calculation, etc)
-        self.player.update()
-        pass
+        self.veiwMan.update()
 
     def render(self):
         if(DEBUG):print("Rendering");

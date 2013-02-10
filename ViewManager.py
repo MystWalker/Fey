@@ -10,6 +10,8 @@ import pygame
 from pygame.sprite import Group #Used for sprite organization
 from Character import Character
 
+DEBUG = False
+
 class ViewManager (pygame.sprite.Sprite):
     def __init__ ( self, color, initial_position, size, player = None ):
         #Sprite
@@ -32,16 +34,26 @@ class ViewManager (pygame.sprite.Sprite):
         #Sprite Groups
         self.activeObjects = Group()
         self.activeBackground = Group()
-        self.activeAvatar = Group()
+        self.activeAvatar = pygame.sprite.GroupSingle()
 
     def setup(self):
         #self.image.blit(self.player.image, self.player.rect) #Draw player onto self
         pass
 
     def update(self):
-        pass
+        self.activeObjects.update()
+        self.activeBackground.update()
+        self.activeAvatar.update()
+        
+        if(self.activeAvatar):
+            collisions = pygame.sprite.spritecollide(self.activeAvatar.sprite, self.activeObjects, False)
+            if(collisions):
+                for item in collisions:
+                    item.touched()
+        
 
     def setCurrentView ( self , view ):
+        if(DEBUG):print("Setting view");
         self.activeBackground.empty() #Get rid of old background
         self.activeObjects.empty() #Get rid of old objects
         self.activeAvatar.empty() #Get rid of old Avatar

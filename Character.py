@@ -49,16 +49,12 @@ class Character (pygame.sprite.Sprite):
         
     def move(self, event):
         if event.type == pygame.KEYDOWN and event.key == K_LEFT:
-            print("Moving Left")
             self.speed = (-10,0)
         elif event.type == pygame.KEYUP and event.key == K_LEFT:
-            print("Stopping Right")
             self.speed = (0,0)
         elif event.type == pygame.KEYDOWN and event.key == K_RIGHT:
-            print("Moving Right")
             self.speed = (10,0)
         elif event.type == pygame.KEYUP and event.key == K_RIGHT:
-            print("Stopping Right")
             self.speed = (0,0)
 
     def update(self):
@@ -67,7 +63,7 @@ class Character (pygame.sprite.Sprite):
         
         self.rect.move_ip(self.speed)
         
-        
+        """ #Deactivated for now
         
         #Illness
         self.nose = self.nose + self.noseSlope
@@ -83,6 +79,8 @@ class Character (pygame.sprite.Sprite):
 
         if(self.nausea >= self.nauseaTresh):
             self.vomit()
+            
+        #"""
 
 
 #Test Main
