@@ -134,10 +134,12 @@ class Fey ( ):
         pass
 
     def cleanup(self):
+        """Runs the pygame.quit() function, which closes the display safely."""
         if(DEBUG):print("Cleaning up");
         pygame.quit()
 
     def run(self):
+        """Starts the game's main loop."""
         if(DEBUG):print("Attempting to run");
         if self.start() == False:
             self.RUNNING = False

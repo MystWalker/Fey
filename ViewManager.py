@@ -14,6 +14,7 @@ DEBUG = False
 
 class ViewManager (pygame.sprite.Sprite):
     def __init__ ( self, color, initial_position, size, player = None ):
+        """Creates a new ViewManager object."""
         #Sprite
         pygame.sprite.Sprite.__init__(self)
 
@@ -37,10 +38,12 @@ class ViewManager (pygame.sprite.Sprite):
         self.activeAvatar = pygame.sprite.GroupSingle()
 
     def setup(self):
+        """Does nothing at this point."""
         #self.image.blit(self.player.image, self.player.rect) #Draw player onto self
         pass
 
     def update(self):
+        """Calls the update method of all active objects, checks for colisions with player."""
         self.activeObjects.update()
         self.activeBackground.update()
         self.activeAvatar.update()
@@ -53,6 +56,7 @@ class ViewManager (pygame.sprite.Sprite):
         
 
     def setCurrentView ( self , view ):
+        """Replaces current active objects with those of the passed view."""
         if(DEBUG):print("Setting view");
         self.activeBackground.empty() #Get rid of old background
         self.activeObjects.empty() #Get rid of old objects
@@ -65,10 +69,13 @@ class ViewManager (pygame.sprite.Sprite):
         pass
 
     def drawView ( self ):
-        #Draws sprites in the proper order for depth
-        #1. Background
-        #2. Objects
-        #3. Player avatar
+        """Draws sprites in the proper order for depth
+        
+        1. Background
+        2. Objects
+        3. Player avatar
+        
+        """
         self.activeBackground.draw(self.image)
         self.activeObjects.draw(self.image)
         self.activeAvatar.draw(self.image)

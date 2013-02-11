@@ -4,8 +4,7 @@ from pygame.locals import *
 
 class Character (pygame.sprite.Sprite):
     def __init__ ( self, color = [255,0,0], initial_position = [0,0], size = [60, 120]):
-        """Returns a Character. Based on python.sprite.Sprite
-        """
+        """Returns a Character. Based on python.sprite.Sprite"""
         #Sprite
         pygame.sprite.Sprite.__init__(self)
 
@@ -39,17 +38,21 @@ class Character (pygame.sprite.Sprite):
     
 
     def sneeze(self):
+        """Performs the sneeze action."""
         print("Achoo!")#Game relivant code here
 
 
     def pound(self):
+        """Performs the pound action."""
         print("Argh!")#Game relivant code here
 
 
     def vomit(self):
+        """Performs the vomit action."""
         print("Hurgle!")#Game relivant code here
         
     def move(self, event):
+        """Sets the Character's x-dimentional speed based on passed event."""
         if event.type == pygame.KEYDOWN and event.key == K_LEFT:
             self.speed = (-10,0)
         elif event.type == pygame.KEYUP and event.key == K_LEFT:
@@ -60,6 +63,11 @@ class Character (pygame.sprite.Sprite):
             self.speed = (0,0)
 
     def update(self):
+        """Changes the Character's rect position and symptoms as needed.
+        
+        This should be called every cycle the Character is active.
+        
+        """
         #Movement
         x, y = self.rect.midbottom
         

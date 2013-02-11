@@ -15,6 +15,7 @@ from pygame.locals import *
 DEBUG = False
 
 class Item (pygame.sprite.Sprite):
+    """Creates a new Item object."""
     def __init__ (self, initial_position = [25,50]):
         #Sprite
         pygame.sprite.Sprite.__init__(self)
@@ -30,16 +31,23 @@ class Item (pygame.sprite.Sprite):
         self.TOUCHED = False
         
     def update(self):
+        """Checks if the Item has be collided by the avatar, changes color of Item.
+        
+        This should be called every cycle the Item is active.
+        
+        """
         if(DEBUG):print("Updating");
         if(not self.TOUCHED): self.image.fill([0,0,255])
         
     def touched(self):
+        """Alerts the Item that it has been colided with and posts an event."""
         if(DEBUG): print("Touched");
         self.image.fill([0,100,100])
         if(DEBUG): print("Posting: " + str(self.touched_event))
         pygame.event.post(self.touched_event)
         
     def setTouchEvent(self, event):
+        """Sets the touch event of the Item to the past event."""
         self.touched_event = event
         
 #Test Main
