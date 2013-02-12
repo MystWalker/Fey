@@ -13,7 +13,7 @@ from ControlManager import ControlManager
 from Character import Character
 from Room import Room
 from Item import Item
-
+import Events
 #Set to True for debug print statements
 DEBUG = False
 
@@ -62,9 +62,9 @@ class Fey ( ):
         
         #Creating items
         self.box = Item([400, 600])
-        self.box.setTouchEvent(pygame.event.Event(25, {"room":self.room2}))
+        self.box.setTouchEvent(pygame.event.Event(Events.ROOM_CHANGE, {"room":self.room2}))
         self.box2 = Item([200, 600])
-        self.box2.setTouchEvent(pygame.event.Event(25, {"room":self.room1}))
+        self.box2.setTouchEvent(pygame.event.Event(Events.ROOM_CHANGE, {"room":self.room1}))
         self.room1.addObject(self.box)
         self.room2.addObject(self.box2)
         self.itemGroup = pygame.sprite.RenderPlain(self.box,self.box2)
@@ -98,12 +98,12 @@ class Fey ( ):
         if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
             self.RUNNING = False
         elif event.type == pygame.KEYDOWN and event.key == K_SPACE:
-            callChange = pygame.event.Event(25, {"room":self.room1})
+            callChange = pygame.event.Event(Events.ROOM_CHANGE, {"room":self.room1})
             pygame.event.post(callChange)
         elif event.type == pygame.KEYDOWN and event.key == K_DOWN:
-            callChange = pygame.event.Event(25, {"room":self.room2})
+            callChange = pygame.event.Event(Events.ROOM_CHANGE, {"room":self.room2})
             pygame.event.post(callChange)
-        elif(event.type == 25): #Event #25 is a changeRoom call
+        elif(event.type == Events.ROOM_CHANGE):
             self.veiwMan.setCurrentView(event.room)
         else:
             self.conMan.handle(event)
