@@ -35,8 +35,9 @@ class Character (pygame.sprite.Sprite):
         self.noseThresh = 1
         self.headThresh = 0.5
         self.nauseaTresh= 1
-    
-
+        
+        self.right = 0
+        self.left = 0
     def sneeze(self):
         """Performs the sneeze action."""
         print("Achoo!")#Game relivant code here
@@ -53,14 +54,17 @@ class Character (pygame.sprite.Sprite):
         
     def move(self, event):
         """Sets the Character's x-dimentional speed based on passed event."""
+        
         if event.type == pygame.KEYDOWN and event.key == K_LEFT:
-            self.speed = (-10,0)
+            self.left = -10
         elif event.type == pygame.KEYUP and event.key == K_LEFT:
-            self.speed = (0,0)
-        elif event.type == pygame.KEYDOWN and event.key == K_RIGHT:
-            self.speed = (10,0)
+            self.left = 0
+        if event.type == pygame.KEYDOWN and event.key == K_RIGHT:
+            self.right = 10
         elif event.type == pygame.KEYUP and event.key == K_RIGHT:
-            self.speed = (0,0)
+            self.right = 0
+
+        self.speed = (self.left + self.right, 0)
 
     def update(self):
         """Changes the Character's rect position and symptoms as needed.
