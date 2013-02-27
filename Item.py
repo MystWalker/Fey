@@ -27,6 +27,7 @@ class Item (pygame.sprite.Sprite):
         self.rect.midbottom = initial_position
         
         self.touched_event = pygame.event.Event(NOEVENT)
+        self.interacted_event = pygame.event.Event(NOEVENT)
         
         self.TOUCHED = False
         
@@ -49,6 +50,16 @@ class Item (pygame.sprite.Sprite):
     def setTouchEvent(self, event):
         """Sets the touch event of the Item to the past event."""
         self.touched_event = event
+        
+    def interact(self):
+        """Alerts the Item that it has been interacted with and posts an event."""
+        if(DEBUG): print("Interacted");
+        if(DEBUG): print("Posting: " + str(self.interacted_event))
+        pygame.event.post(self.interacted_event)
+        
+    def setInteractEvent(self, event):
+        """Sets the touch event of the Item to the past event."""
+        self.interacted_event = event
         
 #Test Main
 if __name__ == '__main__':

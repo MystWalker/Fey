@@ -64,7 +64,7 @@ class Fey ( ):
         self.box = Item([400, 600])
         self.box.setTouchEvent(pygame.event.Event(Events.ROOM_CHANGE, {"room":self.room2}))
         self.box2 = Item([200, 600])
-        self.box2.setTouchEvent(pygame.event.Event(Events.ROOM_CHANGE, {"room":self.room1}))
+        self.box2.setInteractEvent(pygame.event.Event(Events.ROOM_CHANGE, {"room":self.room1}))
         self.room1.addObject(self.box)
         self.room2.addObject(self.box2)
         self.itemGroup = pygame.sprite.RenderPlain(self.box,self.box2)

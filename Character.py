@@ -2,6 +2,8 @@
 import pygame
 from pygame.locals import *
 
+DEBUG = False
+
 class Character (pygame.sprite.Sprite):
     def __init__ ( self, color = [255,0,0], initial_position = [0,0], size = [60, 120]):
         """Returns a Character. Based on python.sprite.Sprite"""
@@ -16,6 +18,11 @@ class Character (pygame.sprite.Sprite):
         
         #Movement fields
         self.speed = (0,0)
+        self.right = 0
+        self.left = 0
+        
+        #Collision
+        self.collisions = pygame.sprite.Group()
         
         #Symptom intensities
         self.nose = 0
@@ -36,8 +43,7 @@ class Character (pygame.sprite.Sprite):
         self.headThresh = 0.5
         self.nauseaTresh= 1
         
-        self.right = 0
-        self.left = 0
+        
     def sneeze(self):
         """Performs the sneeze action."""
         print("Achoo!")#Game relivant code here
@@ -65,7 +71,16 @@ class Character (pygame.sprite.Sprite):
             self.right = 0
 
         self.speed = (self.left + self.right, 0)
-
+        
+        if event.type == pygame.KEYDOWN and event.key == K_x:
+            if(DEBUG):print("X.")
+            if(self.collisions):
+                print("Yes, collisions.")
+                for item in self.collisions:
+                    if(DEBUG):print(str(item))
+                    item.interact()
+                    
+                    
     def update(self):
         """Changes the Character's rect position and symptoms as needed.
         
@@ -76,6 +91,8 @@ class Character (pygame.sprite.Sprite):
         x, y = self.rect.midbottom
         
         self.rect.move_ip(self.speed)
+        
+        self.collisions.empty()
         
         """ #Deactivated for now
         

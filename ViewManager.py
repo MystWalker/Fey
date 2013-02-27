@@ -9,6 +9,7 @@
 import pygame
 from pygame.sprite import Group #Used for sprite organization
 from Character import Character
+from CollisionManager import CollisionManager
 
 DEBUG = False
 
@@ -36,6 +37,9 @@ class ViewManager (pygame.sprite.Sprite):
         self.activeObjects = Group()
         self.activeBackground = Group()
         self.activeAvatar = pygame.sprite.GroupSingle()
+        
+        #Collision
+        self.collision = CollisionManager()
 
     def setup(self):
         """Does nothing at this point."""
@@ -44,15 +48,11 @@ class ViewManager (pygame.sprite.Sprite):
 
     def update(self):
         """Calls the update method of all active objects, checks for colisions with player."""
+        self.collision.update()
+        
         self.activeObjects.update()
         self.activeBackground.update()
         self.activeAvatar.update()
-        
-        if(self.activeAvatar):
-            collisions = pygame.sprite.spritecollide(self.activeAvatar.sprite, self.activeObjects, False)
-            if(collisions):
-                for item in collisions:
-                    item.touched()
         
 
     def setCurrentView ( self , view ):
@@ -66,6 +66,11 @@ class ViewManager (pygame.sprite.Sprite):
         self.activeBackground.add(view.background)
         self.activeObjects.add(view.objects)
         self.activeAvatar.add(view.avatar)
+        
+        #Passes CollisionManager active objects
+        self.collision.setActiveObjects(self.activeObjects, self.activeAvatar)
+        
+        
         pass
 
     def drawView ( self ):
